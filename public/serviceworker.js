@@ -1,18 +1,20 @@
 const CACHE_NAME = "version-1";
 const urlsToCache = ["index.html", "offline.html"];
+
 const self = this;
 
-//instal SW
-
+// Install SW
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("opens cache", cache);
+      console.log("Opened cache");
+
       return cache.addAll(urlsToCache);
     })
   );
 });
-//listen for requests
+
+// Listen for requests
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then(() => {
@@ -21,7 +23,7 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-//activate the service worker
+// Activate the SW
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [];
   cacheWhitelist.push(CACHE_NAME);
@@ -30,7 +32,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((cacheNames) =>
       Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName.includes(cacheName)) {
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })

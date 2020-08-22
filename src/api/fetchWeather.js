@@ -6,7 +6,7 @@ export const fetchWeather = async (query) => {
     params: {
       q: query,
       units: "metric",
-      APPID: process.env.API_KEY,
+      APPID: process.env.REACT_APP_API_KEY,
     },
   });
 

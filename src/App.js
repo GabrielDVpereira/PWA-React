@@ -3,7 +3,7 @@ import "./App.css";
 import { fetchWeather } from "./api/fetchWeather";
 const App = () => {
   const [query, setQuery] = useState("");
-  const [wheather, setWeather] = useState("");
+  const [weather, setWeather] = useState("");
 
   const search = async (e) => {
     if (e.key === "Enter") {
@@ -24,19 +24,23 @@ const App = () => {
         }}
         onKeyPress={search}
       />
-      {wheather.main && (
+      {weather.main && (
         <div className="city">
           <h2 className="city-name">
-            <span>{wheather.name}</span>
-            <sup>{wheather.sys.country}</sup>
+            <span>{weather.name}</span>
+            <sup>{weather.sys.country}</sup>
           </h2>
           <div className="city-temp">
-            {Math.round(wheather.main.temp)}
+            {Math.round(weather.main.temp)}
             <sup>&deg;C</sup>
           </div>
           <div className="info">
-          <img className="city-icon" src={`https://openweathermap.org/img/wn/${wheather.weather[0].icon}@2x.png`} alt={wheather.weather[0].description} />
-
+            <img
+              className="city-icon"
+              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt={weather.weather[0].description}
+            />
+            <p>{weather.weather[0].description}</p>
           </div>
         </div>
       )}
